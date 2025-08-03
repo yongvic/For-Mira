@@ -1,0 +1,40 @@
+.card {
+  background-color: var(--surface-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 6px 20px rgba(88, 166, 255, 0.1);
+  border-color: var(--primary-accent);
+}
+
+.cardHeader {
+  padding: calc(var(--spacing-unit) * 1.5);
+  padding-bottom: var(--spacing-unit);
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-title);
+  letter-spacing: -0.025em;
+}
+
+.cardDescription {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-top: calc(var(--spacing-unit) / 2);
+}
+
+.cardContent {
+  padding: 0 calc(var(--spacing-unit) * 1.5);
+}
+
+.cardFooter {
+  padding: calc(var(--spacing-unit) * 1.5);
+  padding-top: var(--spacing-unit);
+}

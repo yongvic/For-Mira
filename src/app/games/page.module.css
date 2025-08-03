@@ -1,0 +1,91 @@
+.container {
+  padding: calc(var(--spacing-unit) * 2);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  animation: slideUp 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.header h1 {
+  margin-bottom: var(--spacing-unit);
+}
+
+.playersInfo {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+}
+
+.playersInfo span {
+  color: var(--primary-accent);
+  font-weight: 700;
+  padding: 0.2rem 0.6rem;
+  background-color: var(--surface-dark);
+  border-radius: var(--border-radius);
+}
+
+.gamesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: calc(var(--spacing-unit) * 2);
+}
+
+.card {
+  background-color: var(--surface-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--border-radius);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease;
+  animation: popIn 0.5s ease-out both;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  border-color: var(--primary-accent);
+}
+
+/* Staggered animation for the cards */
+.gamesGrid > *:nth-child(1) { animation-delay: 0.1s; }
+.gamesGrid > *:nth-child(2) { animation-delay: 0.2s; }
+.gamesGrid > *:nth-child(3) { animation-delay: 0.3s; }
+.gamesGrid > *:nth-child(4) { animation-delay: 0.4s; }
+.gamesGrid > *:nth-child(5) { animation-delay: 0.5s; }
+.gamesGrid > *:nth--child(6) { animation-delay: 0.6s; }
+.gamesGrid > *:nth-child(7) { animation-delay: 0.7s; }
+
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.gameCard .cardContent {
+  flex-grow: 1; /* Pushes footer to the bottom */
+}
+
+.playButton {
+  width: 100%;
+}
