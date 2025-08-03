@@ -1,0 +1,60 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-unit);
+  text-align: center;
+  min-height: 80vh;
+}
+
+.title {
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.choicesContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: calc(var(--spacing-unit) * 3);
+  width: 100%;
+  max-width: 900px;
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.choiceCard {
+  background-color: var(--surface-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-unit) * 3);
+  width: 100%;
+  min-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform var(--transition-speed) ease, box-shadow var(--transition-speed) ease, border-color var(--transition-speed) ease;
+}
+
+.choiceCard:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+  border-color: var(--primary-accent);
+}
+
+.choiceText {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.separator {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--primary-accent);
+  transform: rotate(-10deg);
+}
+
+.actions {
+  height: 50px; /* Reserve space to prevent layout shift */
+}

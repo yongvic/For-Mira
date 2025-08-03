@@ -1,144 +1,102 @@
 .container {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 100vh;
-  background-image: linear-gradient(to bottom right, #fee2e2, #fef9c3);
-  padding: 1rem;
+  min-height: 80vh;
+  padding: var(--spacing-unit);
 }
 
 .card {
   width: 100%;
-  max-width: 28rem;
+  max-width: 450px;
   text-align: center;
-  box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.25);
 }
 
 .cardTitle {
-  font-size: 1.875rem;
-  font-weight: 700;
-  color: #b91c1c;
+  font-size: 2rem;
+  font-weight: 800;
 }
 
 .cardDescription {
-  font-size: 1.125rem;
-  margin-top: 0.5rem;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
 }
 
 .currentPlayer {
-  font-weight: 800;
-  color: #ef4444;
+  color: var(--primary-accent);
+  font-weight: 700;
 }
 
 .cardContent {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 2rem;
+  gap: calc(var(--spacing-unit) * 2);
+  padding-top: var(--spacing-unit);
 }
 
 .diceContainer {
-  transition: transform 0.3s;
+  width: 150px;
+  height: 150px;
 }
 
-.diceRolling {
-  animation: bounce 1s infinite;
-}
-
-.rollButton {
-  background-color: #ef4444;
-  color: white;
-  font-size: 1.25rem;
-  font-weight: 700;
-  padding: 1.5rem 2.5rem;
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-}
-
-.rollButton:hover {
-  background-color: #dc2626;
-}
-
-.dialogTitle {
-  font-size: 1.5rem;
-  text-align: center;
-  color: #b91c1c;
-}
-
-.dialogDescription {
-  text-align: center;
-}
-
-.dareContainer {
-  margin: 1rem 0;
-  padding: 1rem;
-  background-color: #fef2f2;
-  border-radius: 0.5rem;
-  text-align: center;
-  min-height: 100px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.dareText {
-  font-weight: 600;
-  color: #1e293b;
-  font-size: 1.125rem;
-}
-
-.nextButton {
-  width: 100%;
-  background-color: #dc2626;
-}
-
-.nextButton:hover {
-  background-color: #b91c1c;
-}
-
-/* --- Dice Component Styles --- */
 .dice {
-  width: 8rem;
-  height: 8rem;
-  background-color: white;
-  border-radius: 1rem;
-  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
-}
-
-.dotGrid {
   width: 100%;
   height: 100%;
+  background-color: var(--surface-dark);
+  border: 2px solid var(--border-dark);
+  border-radius: var(--border-radius);
+  padding: var(--spacing-unit);
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-rows: repeat(2, 1fr);
-  gap: 0.5rem;
-}
-
-.dotContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  gap: calc(var(--spacing-unit) / 2);
 }
 
 .dot {
-  width: 1.5rem;
-  height: 1.5rem;
-  background-color: #1e293b;
-  border-radius: 9999px;
+  width: 25px;
+  height: 25px;
+  background-color: var(--text-primary);
+  border-radius: 50%;
+  margin: auto;
+  visibility: hidden;
 }
 
-@keyframes bounce {
-  0%, 100% {
-    transform: translateY(-25%);
-    animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-  }
-  50% {
-    transform: translateY(0);
-    animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-  }
+.dotVisible {
+  visibility: visible;
+}
+
+.diceRolling .dice {
+  animation: roll 0.6s linear infinite;
+}
+
+@keyframes roll {
+  0% { transform: rotate(0deg) scale(1); }
+  50% { transform: rotate(180deg) scale(1.1); }
+  100% { transform: rotate(360deg) scale(1); }
+}
+
+.rollButton {
+  width: 80%;
+}
+
+/* Dialog Styles */
+.dialogTitle {
+  color: var(--text-title);
+}
+.dialogDescription {
+  color: var(--text-secondary);
+}
+.dareContainer {
+  background-color: var(--surface-dark);
+  padding: var(--spacing-unit) * 2;
+  border-radius: var(--border-radius);
+  margin: var(--spacing-unit) 0;
+}
+.dareText {
+  font-size: 1.25rem;
+  color: var(--text-primary);
+}
+.nextButton {
+  width: 100%;
 }

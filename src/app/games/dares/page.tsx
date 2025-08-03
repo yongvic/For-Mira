@@ -1,74 +1,45 @@
 "use client";
 
 import { useState } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
-import { dares } from '@/lib/game-data'; // On réutilise les défis "hot"
+import { dares } from '@/lib/game-data';
+import styles from './dares.module.css';
 
-const hotDares = dares.hot;
-
-const getRandomDare = () => {
-  return hotDares[Math.floor(Math.random() * hotDares.length)];
+// --- Helper to get a random item from a specific category ---
+const getRandomDare = (category: 'romantic' | 'hot' | 'cute') => {
+  const categoryDares = dares[category];
+  return categoryDares[Math.floor(Math.random() * categoryDares.length)];
 };
 
-export default function HotDaresPage() {
-  const searchParams = useSearchParams();
-  const player1Name = searchParams.get('p1') || 'Joueur 1';
-  const player2Name = searchParams.get('p2') || 'Joueur 2';
+export default function DaresPage() {
+  const [currentDare, setCurrentDare] = useState("Choisissez une catégorie pour commencer !");
 
-  const [currentPlayer, setCurrentPlayer] = useState(1);
-  const [currentDare, setCurrentDare] = useState<string | null>(null);
-  const [isDareRevealed, setIsDareRevealed] = useState(false);
-
-  const revealDare = () => {
-    if (isDareRevealed) return;
-    setCurrentDare(getRandomDare());
-    setIsDareRevealed(true);
+  const handleNewDare = (category: 'romantic' | 'hot' | 'cute') => {
+    setCurrentDare(getRandomDare(category));
   };
-
-  const nextTurn = () => {
-    setIsDareRevealed(false);
-    setCurrentDare(null);
-    setCurrentPlayer(p => (p === 1 ? 2 : 1));
-  };
-
-  const currentPlayerName = currentPlayer === 1 ? player1Name : player2Name;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-red-200 via-rose-200 to-pink-200 p-4">
-      <Card className="w-full max-w-md text-center shadow-2xl">
-        <CardHeader>
-          <CardTitle className="text-3xl font-bold text-red-800">🔥 Défis Coquins 🔥</CardTitle>
-          <CardDescription className="text-lg mt-2">
-            Au tour de <span className="font-extrabold text-rose-600">{currentPlayerName}</span> de faire monter la température...
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col items-center gap-6">
-          <div className="w-full h-48 bg-white/50 rounded-lg flex items-center justify-center p-6 shadow-inner">
-            {isDareRevealed ? (
-              <p className="text-2xl font-semibold text-rose-900 animate-in fade-in duration-500">
-                {currentDare}
-              </p>
-            ) : (
-              <Button
-                onClick={revealDare}
-                className="bg-rose-500 hover:bg-rose-600 text-white text-xl font-bold py-6 px-10 rounded-lg shadow-lg"
-              >
-                Révéler le défi
-              </Button>
-            )}
-          </div>
+    <div className={styles.container}>
+      <h1 className="text-4xl font-extrabold mb-2">Défis Coquins</h1>
+      <p className={styles.playerInfo}>
+        À tour de rôle, choisissez une catégorie et relevez le défi !
+      </p>
 
-          <Button
-            onClick={nextTurn}
-            disabled={!isDareRevealed}
-            className="bg-slate-700 hover:bg-slate-800 text-white text-lg py-4 px-8 rounded-lg"
-          >
-            Défi relevé ! Tour suivant
-          </Button>
-        </CardContent>
-      </Card>
+      <div className={styles.card}>
+        <p className={styles.dareText}>"{currentDare}"</p>
+      </div>
+
+      <div className={`${styles.actions} flex gap-4 mt-6`}>
+        <Button onClick={() => handleNewDare('cute')} variant="secondary">
+          Mignon
+        </Button>
+        <Button onClick={() => handleNewDare('romantic')}>
+          Romantique
+        </Button>
+        <Button onClick={() => handleNewDare('hot')} variant="destructive">
+          Coquin
+        </Button>
+      </div>
     </div>
   );
 }

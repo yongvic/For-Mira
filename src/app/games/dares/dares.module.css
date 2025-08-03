@@ -1,0 +1,46 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-unit);
+  text-align: center;
+  min-height: 80vh;
+}
+
+.card {
+  background-color: var(--surface-dark);
+  border: 1px solid var(--border-dark);
+  border-radius: var(--border-radius);
+  padding: calc(var(--spacing-unit) * 3);
+  width: 100%;
+  max-width: 600px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+
+.dareText {
+  font-size: 1.75rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.playerInfo {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  margin-bottom: calc(var(--spacing-unit) * 3);
+}
+
+.playerInfo span {
+  color: var(--primary-accent);
+  font-weight: 700;
+}
+
+.actions {
+  margin-top: calc(var(--spacing-unit) * 2);
+}

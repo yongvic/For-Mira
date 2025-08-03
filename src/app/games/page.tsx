@@ -1,6 +1,6 @@
 "use client";
 
-import { useSearchParams, useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import styles from './page.module.css';
@@ -15,17 +15,13 @@ const games = [
   { id: 'would-you-rather', title: 'Tu Préfères...?', description: 'Des choix cornéliens pour des discussions passionnées.', status: 'Disponible' }
 ];
 
-export default function GamesPage() {
-  const searchParams = useSearchParams();
+// This component will now be wrapped in Suspense at the layout level
+function GamesPageContent() {
   const router = useRouter();
-  const player1 = searchParams.get('p1') || 'Joueur 1';
-  const player2 = searchParams.get('p2') || 'Joueur 2';
+  const searchParams = useSearchParams();
 
   const handlePlay = (gameId: string) => {
-    const query = new URLSearchParams({
-      p1: player1,
-      p2: player2
-    }).toString();
+    const query = searchParams.toString();
     router.push(`/games/${gameId}?${query}`);
   };
 
@@ -34,7 +30,7 @@ export default function GamesPage() {
       <header className={styles.header}>
         <h1>Choisissez votre jeu</h1>
         <p className={styles.playersInfo}>
-          <span>{player1}</span> vs <span>{player2}</span>
+          Préparez-vous à vous amuser !
         </p>
       </header>
 
@@ -45,9 +41,7 @@ export default function GamesPage() {
               <CardTitle>{game.title}</CardTitle>
               <CardDescription>{game.description}</CardDescription>
             </CardHeader>
-            <CardContent>
-              {/* This space can be used for game icons or more info in the future */}
-            </CardContent>
+            <CardContent />
             <CardFooter>
               <Button 
                 className={styles.playButton}
@@ -62,4 +56,9 @@ export default function GamesPage() {
       </main>
     </div>
   );
+}
+
+// The default export for the page will now wrap the content in Suspense
+export default function GamesPage() {
+    return <GamesPageContent />;
 }

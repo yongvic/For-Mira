@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
 import { Card, CardContent } from '@/components/ui/card';
-import styles from './memory.module.css'; // Import the new CSS module
+import styles from './memory.module.css';
 
 // --- Game Data ---
 const emojis = ['😍', '🍓', '🧸', '🔥', '💋', '💖', '🌹', '🍫'];
@@ -33,10 +32,6 @@ const shuffleArray = (array: any[]) => {
 };
 
 export default function MemoryGamePage() {
-  const searchParams = useSearchParams();
-  const player1Name = searchParams.get('p1') || 'Joueur 1';
-  const player2Name = searchParams.get('p2') || 'Joueur 2';
-
   const [cards, setCards] = useState<MemoryCardType[]>([]);
   const [flippedCards, setFlippedCards] = useState<number[]>([]);
   const [scores, setScores] = useState({ player1: 0, player2: 0 });
@@ -79,10 +74,7 @@ export default function MemoryGamePage() {
       ));
       setScores(prev => {
         const key = `player${currentPlayer}` as keyof typeof prev;
-        return {
-          ...prev,
-          [key]: prev[key] + 1,
-        };
+        return { ...prev, [key]: prev[key] + 1 };
       });
       setFlippedCards([]);
       setLockBoard(false);
@@ -101,11 +93,11 @@ export default function MemoryGamePage() {
   useEffect(() => {
     const allMatched = cards.length > 0 && cards.every(card => card.isMatched);
     if (allMatched) {
-      if (scores.player1 > scores.player2) setWinner(player1Name);
-      else if (scores.player2 > scores.player1) setWinner(player2Name);
+      if (scores.player1 > scores.player2) setWinner("Joueur 1");
+      else if (scores.player2 > scores.player1) setWinner("Joueur 2");
       else setWinner("Égalité");
     }
-  }, [cards, scores, player1Name, player2Name]);
+  }, [cards, scores]);
 
   const handleCardClick = (index: number) => {
     if (lockBoard || cards[index].isFlipped || cards[index].isMatched || flippedCards.length >= 2) return;
@@ -121,34 +113,31 @@ export default function MemoryGamePage() {
 
   return (
     <div className="container mx-auto p-4 text-center">
-      {/* Score Header */}
       <Card className="mb-6">
         <CardContent className="flex justify-around items-center p-4">
           <div className="text-center">
-            <p className="text-xl font-bold text-primary">{player1Name}</p>
+            <p className="text-xl font-bold text-primary">Joueur 1</p>
             <p className="text-3xl font-bold">{scores.player1}</p>
           </div>
           <div className="text-center px-4">
               <h1 className="text-2xl font-bold">Memory Game</h1>
               <p className="text-lg text-muted-foreground">
-                Tour de: <span className="font-bold text-primary">{currentPlayer === 1 ? player1Name : player2Name}</span>
+                Tour du <span className="font-bold text-primary">Joueur {currentPlayer}</span>
               </p>
           </div>
           <div className="text-center">
-            <p className="text-xl font-bold text-primary">{player2Name}</p>
+            <p className="text-xl font-bold text-primary">Joueur 2</p>
             <p className="text-3xl font-bold">{scores.player2}</p>
           </div>
         </CardContent>
       </Card>
 
-      {/* Game Board */}
       <div className={styles.gameBoard}>
         {cards.map((card, index) => (
           <MemoryCard key={card.id} card={card} onClick={() => handleCardClick(index)} />
         ))}
       </div>
 
-      {/* Winner Dialog */}
       <Dialog open={!!winner} onOpenChange={() => !winner && setupGame()}>
         <DialogContent>
           <DialogHeader>
@@ -178,7 +167,6 @@ export default function MemoryGamePage() {
   );
 }
 
-// --- Memory Card Component ---
 interface MemoryCardProps {
   card: MemoryCardType;
   onClick: () => void;
@@ -189,11 +177,7 @@ function MemoryCard({ card, onClick }: MemoryCardProps) {
   return (
     <div className={styles.cardContainer} onClick={isFlippable ? onClick : undefined}>
       <div className={`${styles.cardInner} ${card.isFlipped || card.isMatched ? styles.cardFlipped : ''}`}>
-        {/* Card Back */}
-        <div className={styles.cardBack}>
-            <span>💞</span>
-        </div>
-        {/* Card Front */}
+        <div className={styles.cardBack}><span>💞</span></div>
         <div className={`${styles.cardFace} ${card.isMatched ? styles.cardMatched : ''}`}>
           <span>{card.emoji}</span>
         </div>
