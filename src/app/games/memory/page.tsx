@@ -77,10 +77,13 @@ export default function MemoryGamePage() {
       setCards(prev => prev.map(card => 
         card.emoji === firstCard.emoji ? { ...card, isMatched: true } : card
       ));
-      setScores(prev => ({
-        ...prev,
-        [`player${currentPlayer}`]: prev[`player${currentPlayer}`] + 1,
-      }));
+      setScores(prev => {
+        const key = `player${currentPlayer}` as keyof typeof prev;
+        return {
+          ...prev,
+          [key]: prev[key] + 1,
+        };
+      });
       setFlippedCards([]);
       setLockBoard(false);
     } else {
